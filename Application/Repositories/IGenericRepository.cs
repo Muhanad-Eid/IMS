@@ -7,6 +7,10 @@ namespace Application.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        List<T> Get(string name);
+        List<T> GetAll();
+        void Add(T item);
+        T GetById(int id);
+        //void Update();
+        //void Delete();
     }
 }

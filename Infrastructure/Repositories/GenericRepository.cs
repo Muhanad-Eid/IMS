@@ -16,10 +16,20 @@ namespace Infrastructure.Repositories
             _context = context;
             _dbSet = context.Set<T>();
         }
-        public List<T> Get(string name)
+        public List<T> GetAll()
         {
             var data = _dbSet.ToList();
             return data;   
+        }
+        public void Add(T item)
+        {
+            _dbSet.Add(item);
+            _context.SaveChanges();
+        }
+        public T GetById(int id)
+        {
+            var user = _dbSet.Find(id);
+            return user;
         }
     }
 }

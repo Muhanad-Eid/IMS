@@ -9,5 +9,7 @@ namespace Application.Services.Interfaces
     public interface IUserService
     {
         public List<GetUserDto> GetUsers(string? name, string? email); 
+        public void AddUser(AddUserDto user);
+        public GetUserDto GetUser(int id);
     }
 }

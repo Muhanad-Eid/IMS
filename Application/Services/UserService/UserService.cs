@@ -11,13 +11,40 @@ namespace Application.Services.UserService
     {
 
         private readonly IGenericRepository<User> _userRepository;
-        public UserService(IGenericRepository<User> genericRepository)
+        public UserService(IGenericRepository<User> userRepository)
         {
-            _userRepository = genericRepository;
+            _userRepository = userRepository;
         }
-        public List<GetUserDto> GetUsers(string? name, string? email)
+
+        public void AddUser(AddUserDto user)
         {
-            return new List<>();
+            var newUser = new User
+            {
+                Id = 0,
+                Name = user.Name,
+                PhoneNumber = user.Phone,
+                Email = user.Email,
+                RoleId = user.RoleId,
+                Password = user.Passsword
+            };
+            _userRepository.Add(newUser);
+        }
+
+        public List<GetUserDto> GetUsers(string? name,string? email)
+        {
+            name = !string.IsNullOrEmpty(name) ? name.ToLower().Trim() : null;
+            var users = new List<GetUserDto>();
+            if(name==null)
+                users = _userRepository.GetAll().Select(u => new GetUserDto { Id = u.Id, Name = u.Name, Email = u.Email }).ToList();
+            else
+                users = _userRepository.GetAll().Select(u => new GetUserDto { Id = u.Id, Name = u.Name, Email = u.Email }).ToList().Where(u=>u.Name.ToLower().Contains(name)).ToList();
+            return users;
+        }
+        public GetUserDto GetUser(int id)
+        {
+            var user = _userRepository.GetById(id);
+            var x = new GetUserDto { Email = user.Email, Name = user.Name, PhoneNumber = user.PhoneNumber ,Id=user.Id};
+            return x;
         }
 
         
