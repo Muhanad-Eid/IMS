@@ -17,7 +17,7 @@ namespace API.Controllers
         [HttpGet("GetUsers")]
         public async Task<IActionResult> GetUsers(string?name, string?email)
         {
-            var users = await _userService.GetUsers(name, email);
+            var users = _userService.GetUsers(name, email);
             return Ok(users);
         }
         [HttpGet("GetUser")]
@@ -27,16 +27,16 @@ namespace API.Controllers
             return Ok(user);
         }
         [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUser(AddUserDto user)
+        public async Task<IActionResult> CreateUser(CreateUserDto user)
         {
             await _userService.CreateUser(user);
             return Ok();
         }
         [HttpPut("UpdateUser")]
-        public Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
+        public async Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
         {
-            _userService.UpdateUser(id, user);
-            return Task.FromResult<IActionResult>(Ok());
+            await _userService.UpdateUser(id, user);
+            return Ok();
         }
         [HttpDelete("DeleteUser")]
         public async Task<IActionResult> DeleteUser(int id)

@@ -15,7 +15,6 @@ namespace Domain.Entities
         [Required, EmailAddress,MaxLength(100)]
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
-        [Required, MaxLength(50)]
         public string Password { get; set; }
         public int RoleId { get; set; }
         [ForeignKey("RoleId")]

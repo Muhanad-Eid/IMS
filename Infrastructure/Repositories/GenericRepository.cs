@@ -39,15 +39,9 @@ namespace Infrastructure.Repositories
         {
               await _dbSet.AddAsync(item);
         }
-        public void Delete(int id)
+        public void Delete(T item)
         {
-            var data = _dbSet.Find(id);
-            _dbSet.Remove(data);
-        }
-        public async Task DeleteAsync(int id)
-        {
-            var data = await _dbSet.FindAsync(id);
-            _dbSet.Remove(data);
+            _dbSet.Remove(item);
         }
 
         public void Update(T item)

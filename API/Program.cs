@@ -1,7 +1,10 @@
 using Application.Repositories;
 using Application.Services.Interfaces;
+using Application.Services.RoleService;
 using Application.Services.UserService;
+using Application.Services.CategoryService;
 using Infrastructure.Context;
+using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
@@ -15,9 +18,12 @@ builder.Services.AddSwaggerGen(c=>c.SwaggerDoc("v1",new OpenApiInfo { Title="IMS
 // Register the open generic types for the generic repository
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IRoleService,RoleService>();
+builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
+UserSeedData.UserSeed(app.Services);
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

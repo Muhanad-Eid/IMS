@@ -14,8 +14,7 @@ namespace Application.Repositories
         Task CreateAsync(T item);
         void Update(T item);
         Task UpdateAsync(T item);
-        void Delete(int id); 
-        Task DeleteAsync(int id);
+        void Delete(T item); 
         void SaveChanges();
         Task SaveChangesAsync();
     }
