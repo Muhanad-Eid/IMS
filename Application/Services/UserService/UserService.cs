@@ -5,6 +5,7 @@ using Application.Repositories;
 using Application.Services.Interfaces;
 using Application.Services.UserService.DTOs;
 using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace Application.Services.UserService
 {
     public class UserService : IUserService
@@ -16,7 +17,33 @@ namespace Application.Services.UserService
             _userRepository = userRepository;
         }
 
-        public void AddUser(AddUserDto user)
+
+        public async Task<List<GetUserDto>> GetUsers(string? name,string? email)
+        {
+            name = !string.IsNullOrEmpty(name) ? name.ToLower().Trim() : null;
+            var users = _userRepository.GetAll();
+            if(name!=null)  
+                users = users.Where(u=>u.Name.ToLower().Contains(name));
+            if(email!=null)  
+                users = users.Where(u=>u.Email.ToLower().Contains(email));
+            users = users.Include(u => u.Role);
+            var result = users.Select(u => new GetUserDto { Id = u.Id, Name = u.Name, Email = u.Email ,RoleName=u.Role.Name,PhoneNumber=u.PhoneNumber}).ToList();
+            return result;
+        }
+        public async Task<GetUserDto> GetUser(int id)
+        {
+            var data =await _userRepository.GetByIdAsync(id);
+            var user = new GetUserDto 
+            { 
+                Email = data.Email, 
+                Name = data.Name, 
+                PhoneNumber = data.PhoneNumber ,
+                Id=data.Id,
+                RoleId=data.RoleId,
+            };
+            return user;
+        }
+        public async Task CreateUser(AddUserDto user)
         {
             var newUser = new User
             {
@@ -27,26 +54,21 @@ namespace Application.Services.UserService
                 RoleId = user.RoleId,
                 Password = user.Passsword
             };
-            _userRepository.Add(newUser);
+            await _userRepository.CreateAsync(newUser);
+            await _userRepository.SaveChangesAsync();
+        }
+        public async Task UpdateUser(int id, UpdateUserDto user)
+        {
+            var data = await _userRepository.GetByIdAsync(id);
+            var newUser = new User { Email= user.Email, Name = user.Name, PhoneNumber = user.PhoneNumber, RoleId = data.RoleId, Password = data.Password };
+            await _userRepository.UpdateAsync(newUser);
+            await _userRepository.SaveChangesAsync();
+        }
+        public async Task DeleteUser(int id)
+        {
+            await _userRepository.DeleteAsync(id);
+            await _userRepository.SaveChangesAsync();
         }
 
-        public List<GetUserDto> GetUsers(string? name,string? email)
-        {
-            name = !string.IsNullOrEmpty(name) ? name.ToLower().Trim() : null;
-            var users = new List<GetUserDto>();
-            if(name==null)
-                users = _userRepository.GetAll().Select(u => new GetUserDto { Id = u.Id, Name = u.Name, Email = u.Email }).ToList();
-            else
-                users = _userRepository.GetAll().Select(u => new GetUserDto { Id = u.Id, Name = u.Name, Email = u.Email }).ToList().Where(u=>u.Name.ToLower().Contains(name)).ToList();
-            return users;
-        }
-        public GetUserDto GetUser(int id)
-        {
-            var user = _userRepository.GetById(id);
-            var x = new GetUserDto { Email = user.Email, Name = user.Name, PhoneNumber = user.PhoneNumber ,Id=user.Id};
-            return x;
-        }
-
-        
     }
 }

@@ -7,10 +7,16 @@ namespace Application.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        List<T> GetAll();
-        void Add(T item);
+        IQueryable<T> GetAll();
         T GetById(int id);
-        //void Update();
-        //void Delete();
+        Task<T> GetByIdAsync(int id);
+        void Create(T item);
+        Task CreateAsync(T item);
+        void Update(T item);
+        Task UpdateAsync(T item);
+        void Delete(int id); 
+        Task DeleteAsync(int id);
+        void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

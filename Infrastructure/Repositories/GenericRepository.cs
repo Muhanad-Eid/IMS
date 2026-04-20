@@ -16,20 +16,56 @@ namespace Infrastructure.Repositories
             _context = context;
             _dbSet = context.Set<T>();
         }
-        public List<T> GetAll()
+        public  IQueryable<T> GetAll()
         {
-            var data = _dbSet.ToList();
+            var data = _dbSet.AsQueryable();
             return data;   
-        }
-        public void Add(T item)
-        {
-            _dbSet.Add(item);
-            _context.SaveChanges();
         }
         public T GetById(int id)
         {
             var user = _dbSet.Find(id);
             return user;
+        }
+        public async Task<T> GetByIdAsync(int id)
+        {
+            var user = await _dbSet.FindAsync(id);
+            return user;
+        }
+        public void Create(T item)
+        {
+             _dbSet.Add(item);
+        }
+        public async Task CreateAsync(T item)
+        {
+              await _dbSet.AddAsync(item);
+        }
+        public void Delete(int id)
+        {
+            var data = _dbSet.Find(id);
+            _dbSet.Remove(data);
+        }
+        public async Task DeleteAsync(int id)
+        {
+            var data = await _dbSet.FindAsync(id);
+            _dbSet.Remove(data);
+        }
+
+        public void Update(T item)
+        {
+            _dbSet.Update(item);
+        }
+
+        public async Task UpdateAsync(T item)
+        {
+            _dbSet.Update(item);
+        }
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
+        public Task SaveChangesAsync()
+        {
+            return _context.SaveChangesAsync();
         }
     }
 }

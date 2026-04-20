@@ -15,21 +15,33 @@ namespace API.Controllers
             _userService = userService;
         }
         [HttpGet("GetUsers")]
-        public IActionResult GetUsers(string?name, string?email)
+        public async Task<IActionResult> GetUsers(string?name, string?email)
         {
-            var users = _userService.GetUsers(name, email);
+            var users = await _userService.GetUsers(name, email);
             return Ok(users);
         }
-        [HttpGet("GetUserById")]
-        public IActionResult GetUserById(int id)
+        [HttpGet("GetUser")]
+        public async Task<IActionResult> GetUser(int id)
         {
-            var user = _userService.GetUser(id);
+            var user = await _userService.GetUser(id);
             return Ok(user);
         }
-        [HttpPost]
-        public IActionResult AddUser(AddUserDto user)
+        [HttpPost("CreateUser")]
+        public async Task<IActionResult> CreateUser(AddUserDto user)
         {
-            _userService.AddUser(user);
+            await _userService.CreateUser(user);
+            return Ok();
+        }
+        [HttpPut("UpdateUser")]
+        public Task<IActionResult> UpdateUser(int id, UpdateUserDto user)
+        {
+            _userService.UpdateUser(id, user);
+            return Task.FromResult<IActionResult>(Ok());
+        }
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            await _userService.DeleteUser(id);
             return Ok();
         }
     }
