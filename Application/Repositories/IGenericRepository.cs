@@ -12,8 +12,9 @@ namespace Application.Repositories
         Task<T> GetByIdAsync(int id);
         void Create(T item);
         Task CreateAsync(T item);
+        void CreateRange(IEnumerable<T> items);
+        Task CreateRangeAsync(IEnumerable<T> items);
         void Update(T item);
-        Task UpdateAsync(T item);
         void Delete(T item); 
         void SaveChanges();
         Task SaveChangesAsync();

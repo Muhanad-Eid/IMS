@@ -1,6 +1,7 @@
 using Application.Repositories;
 using Application.Services.CategoryService;
 using Application.Services.Interfaces;
+using Application.Services.OrderService;
 using Application.Services.ProductService;
 using Application.Services.RoleService;
 using Application.Services.TransactionInventoryService;
@@ -24,6 +25,7 @@ builder.Services.AddScoped<IRoleService,RoleService>();
 builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<IProductService,ProductService>();
 builder.Services.AddScoped<ITransactionInventoryService, TransactionInventoryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();

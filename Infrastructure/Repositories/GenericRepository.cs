@@ -49,17 +49,23 @@ namespace Infrastructure.Repositories
             _dbSet.Update(item);
         }
 
-        public async Task UpdateAsync(T item)
+        public void CreateRange(IEnumerable<T> items)
         {
-            _dbSet.Update(item);
+            _dbSet.AddRange(items);
+        }
+
+        public async Task CreateRangeAsync(IEnumerable<T> items)
+        {
+            await _dbSet.AddRangeAsync(items);
         }
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
-        public Task SaveChangesAsync()
+        public async Task SaveChangesAsync()
         {
-            return _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
+
     }
 }

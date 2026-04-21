@@ -29,7 +29,7 @@ namespace Application.Services.TransactionInventoryService
             if (input.Type == TransactionType.StockIn)
             {
                 product.CurrentStock += input.Quantity;
-                await _productRepository.UpdateAsync(product);
+                _productRepository.Update(product);
             }
             else
             {
@@ -38,7 +38,7 @@ namespace Application.Services.TransactionInventoryService
                     throw new Exception("CurrentStock should be graeter than quantity");
                 }
                 product.CurrentStock -= input.Quantity;
-                await _productRepository.UpdateAsync(product);
+                _productRepository.Update(product);
             }
 
             var data = new TransactionInventory

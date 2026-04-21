@@ -82,7 +82,7 @@ namespace Application.Services.ProductService
             data.Description = item.Description;
             data.CategoryId = item.CategoryId;
             data.SalePrice = item.SalePrice;
-            await _productRepository.UpdateAsync(data);
+            _productRepository.Update(data);
             await _productRepository.SaveChangesAsync();
         }
         public async Task DeleteProduct(int id)

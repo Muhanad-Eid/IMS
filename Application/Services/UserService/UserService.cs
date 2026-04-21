@@ -77,7 +77,7 @@ namespace Application.Services.UserService
             data.RoleId = user.RoleId;
             data.Email = user.Email;
             
-            await _userRepository.UpdateAsync(data);
+            _userRepository.Update(data);
             await _userRepository.SaveChangesAsync();
         }
         public async Task DeleteUser(int id)

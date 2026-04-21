@@ -85,7 +85,7 @@ namespace Application.Services.CategoryService
             data.Name = category.Name;
             data.Description = category.Description;
             data.Sort = category.Sort;
-            await _categoryRepository.UpdateAsync(data);
+            _categoryRepository.Update(data);
             await _categoryRepository.SaveChangesAsync();
         }
     }
