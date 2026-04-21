@@ -1,20 +1,19 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace Domain.Entities
+namespace Application.Services.ProductService.DTOs
 {
-    public class Product
+    public class GetProductDto
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string Name { get; set; }
         public string Description { get; set; }
         public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }  
+        public string Category { get; set; }
         public decimal SalePrice { get; set; }
-        public int CurrentStock { get; set; }   
-
+        public int CurrentStock { get; set; }
     }
 }
