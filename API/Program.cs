@@ -1,14 +1,15 @@
 using Application.Repositories;
-using Application.Services.Interfaces;
-using Application.Services.RoleService;
-using Application.Services.UserService;
 using Application.Services.CategoryService;
+using Application.Services.Interfaces;
+using Application.Services.ProductService;
+using Application.Services.RoleService;
+using Application.Services.TransactionInventoryService;
+using Application.Services.UserService;
 using Infrastructure.Context;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
-using Application.Services.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddScoped<IRoleService,RoleService>();
 builder.Services.AddScoped<ICategoryService,CategoryService>();
 builder.Services.AddScoped<IProductService,ProductService>();
+builder.Services.AddScoped<ITransactionInventoryService, TransactionInventoryService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();

@@ -66,7 +66,6 @@ namespace Application.Services.ProductService
                 Description = item.Description,
                 CategoryId = item.CategoryId,
                 SalePrice = item.SalePrice,
-                CurrentStock = item.CurrentStock,
             };
             await _productRepository.CreateAsync(data);
             await _productRepository.SaveChangesAsync();
@@ -83,7 +82,6 @@ namespace Application.Services.ProductService
             data.Description = item.Description;
             data.CategoryId = item.CategoryId;
             data.SalePrice = item.SalePrice;
-            data.CurrentStock = item.CurrentStock;
             await _productRepository.UpdateAsync(data);
             await _productRepository.SaveChangesAsync();
         }

@@ -10,6 +10,5 @@ namespace Application.Services.ProductService.DTOs
         public string Description { get; set; }
         public int CategoryId { get; set; }
         public decimal SalePrice { get; set; }
-        public int CurrentStock { get; set; }
     }
 }
