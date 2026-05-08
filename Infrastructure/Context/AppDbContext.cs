@@ -15,6 +15,7 @@ namespace Infrastructure.Context
         public DbSet<TransactionInventory> TransactionInventories { get; set; }
         public DbSet<OrderDetail>  OrderDetails{ get; set; }
         public DbSet<Order>  Orders{ get; set; }
+        public DbSet<RefreshToken>  RefreshTokens{ get; set; }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
